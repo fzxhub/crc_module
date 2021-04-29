@@ -2,7 +2,7 @@
 #define _CRC_H
 
 /********************************************************************************************/
-//Êı¾İÀàĞÍ¶¨Òå£ºÔÚ²»Í¬µÄ±àÒëÆ÷¡¢²Ù×÷ÏµÍ³ÖĞ½øĞĞÊÊÅä
+//æ•°æ®ç±»å‹å®šä¹‰ï¼šåœ¨ä¸åŒçš„ç¼–è¯‘å™¨ã€æ“ä½œç³»ç»Ÿä¸­è¿›è¡Œé€‚é…
 /********************************************************************************************/
 typedef  unsigned char		crc_uint8;
 typedef  unsigned short		crc_uint16;
@@ -10,23 +10,23 @@ typedef  unsigned int		crc_uint32;
 /********************************************************************************************/
 
 /********************************************************************************************/
-//ÊÊÅäÓĞÎŞBOOLÀàĞÍµÄ±àÒëÆ÷
+//é€‚é…æœ‰æ— BOOLç±»å‹çš„ç¼–è¯‘å™¨
 /********************************************************************************************/
 //typedef  bool				crc_bool;
 typedef  char				crc_bool;
-#define  crc_true			1		// true  »òÕß 1
-#define  crc_false			0		// false »òÕß 0
+#define  crc_true			1		// true  æˆ–è€… 1
+#define  crc_false			0		// false æˆ–è€… 0
 /********************************************************************************************/
 
-//CRC¼ÆËãº¯Êı
+//CRCè®¡ç®—å‡½æ•°
 crc_uint8  Crc_Calculate_8(crc_uint8* data, crc_uint32 len, crc_uint8 poly, crc_uint8 init, crc_uint8 xorout, crc_bool refin, crc_bool refout);
 crc_uint16 Crc_Calculate_16(crc_uint8* data, crc_uint32 len, crc_uint16 poly, crc_uint16 init, crc_uint16 xorout, crc_bool refin, crc_bool refout);
 crc_uint32 Crc_Calculate_32(crc_uint8* data, crc_uint32 len, crc_uint32 poly, crc_uint32 init, crc_uint32 xorout, crc_bool refin, crc_bool refout);
-//CRCĞ£Ñéº¯Êı
+//CRCæ ¡éªŒå‡½æ•°
 crc_bool Crc_Check_8(crc_uint8* data, crc_uint32 len, crc_uint8 poly, crc_uint8 init, crc_uint8 xorout, crc_bool refin, crc_bool refout);
 crc_bool Crc_Check_16(crc_uint8* data, crc_uint32 len, crc_uint16 poly, crc_uint16 init, crc_uint16 xorout, crc_bool refin, crc_bool refout);
 crc_bool Crc_Check_32(crc_uint8* data, crc_uint32 len, crc_uint32 poly, crc_uint32 init, crc_uint32 xorout, crc_bool refin, crc_bool refout);
-//CRC³£ÓÃº¯Êı
+//CRCå¸¸ç”¨å‡½æ•°
 crc_uint8 Crc_Calculate_Crc8(crc_uint8* data, crc_uint32 len);
 crc_bool  Crc_Check_Crc8(crc_uint8* data, crc_uint32 len);
 crc_uint8 Crc_Calculate_Crc8_Itu(crc_uint8* data, crc_uint32 len);
