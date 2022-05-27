@@ -1,9 +1,9 @@
 #include "crc.h"
 
 /********************************************************************************************/
-//功能：8BIT的数据变量按位反转（不是取反：0与7调换、1与6调换。。。）
-//输入：data：8BIT源数据
-//返回：反转后的数据
+//function: 8BIT High and low Reverse
+//data    ：8BIT
+//return  : Reverse
 /********************************************************************************************/
 crc_uint8 Reverse_Bit8(crc_uint8 data)
 {
@@ -14,9 +14,9 @@ crc_uint8 Reverse_Bit8(crc_uint8 data)
 	return data;
 }
 /********************************************************************************************/
-//功能：16BIT的数据变量按位反转（不是取反：0与15调换、1与14调换。。。）
-//输入：data：16BIT源数据
-//返回：反转后的数据
+//function: 16BIT High and low Reverse
+//data    ：16BIT
+//return  : Reverse
 /********************************************************************************************/
 crc_uint16 Reverse_Bit16(crc_uint16 data)
 {
@@ -27,9 +27,9 @@ crc_uint16 Reverse_Bit16(crc_uint16 data)
 	return data;
 }
 /********************************************************************************************/
-//功能：32BIT的数据变量按位反转（不是取反：0与31调换、1与30调换。。。）
-//输入：data：32BIT源数据
-//返回：反转后的数据
+//function: 32BIT High and low Reverse
+//data    ：32BIT
+//return  : Reverse
 /********************************************************************************************/
 crc_uint32 Reverse_Bit32(crc_uint32 data)
 {
@@ -41,15 +41,15 @@ crc_uint32 Reverse_Bit32(crc_uint32 data)
 	return data;
 }
 /********************************************************************************************/
-//功能：计算CRC8
-//输入：data  ：要计算的源数据
-//输入：len   ：要计算的源数据的长度
-//输入：poly  ：多项式值
-//输入：init  ：计算初始值
-//输入：xorout：结果数据要异或的值
-//输入：refin ：输入数据是否反转
-//输入：refout：输出结果是否反转
-//返回：CRC数据
+//function: Calculate CRC8
+//data    : source data
+//len     : source length
+//poly    : polynomial
+//init    : initial value
+//xorout  : result XOR value
+//refin   : input data inversion (crc_true or crc_false)
+//refout  : output data inversion (crc_true or crc_false)
+//return  : results of CRC8 
 /********************************************************************************************/
 crc_uint8 Crc_Calculate_8(crc_uint8* data, crc_uint32 len, crc_uint8 poly, crc_uint8 init, crc_uint8 xorout, crc_bool refin, crc_bool refout)
 {
@@ -60,7 +60,6 @@ crc_uint8 Crc_Calculate_8(crc_uint8* data, crc_uint32 len, crc_uint8 poly, crc_u
 	while (len--)
 	{
 		temp = *(data++);
-		//输入数据反转
 		if (refin == crc_true) temp = Reverse_Bit8(temp);
 		value ^= temp;
 		for (count = 0; count < 8; count++)
@@ -69,23 +68,20 @@ crc_uint8 Crc_Calculate_8(crc_uint8* data, crc_uint32 len, crc_uint8 poly, crc_u
 			else value = value << 1;
 		}
 	}
-	//输出数据异或操作
 	value ^= xorout;
-	//输出数据反转
 	if (refout == crc_true) return  Reverse_Bit8(value);
-	//输出数据不反转
 	else return value;
 }
 /********************************************************************************************/
-//功能：计算CRC16
-//输入：data  ：要计算的源数据
-//输入：len   ：要计算的源数据的长度
-//输入：poly  ：多项式值
-//输入：init  ：计算初始值
-//输入：xorout：结果数据要异或的值
-//输入：refin ：输入数据是否反转
-//输入：refout：输出结果是否反转
-//返回：CRC数据
+//function: Calculate CRC16
+//data    : source data
+//len     : source length
+//poly    : polynomial
+//init    : initial value
+//xorout  : result XOR value
+//refin   : input data inversion (crc_true or crc_false)
+//refout  : output data inversion (crc_true or crc_false)
+//return  : results of CRC16 
 /********************************************************************************************/
 crc_uint16 Crc_Calculate_16(crc_uint8* data, crc_uint32 len, crc_uint16 poly, crc_uint16 init, crc_uint16 xorout, crc_bool refin, crc_bool refout)
 {
@@ -96,9 +92,7 @@ crc_uint16 Crc_Calculate_16(crc_uint8* data, crc_uint32 len, crc_uint16 poly, cr
 	while (len--)
 	{
 		temp = *(data++);
-		//输入数据反转
 		if (refin == crc_true) temp = Reverse_Bit16(temp);
-		//输入数据不反转
 		else temp = temp << 8;
 		value ^= temp;
 		for (count = 0; count < 8; count++)
@@ -107,24 +101,20 @@ crc_uint16 Crc_Calculate_16(crc_uint8* data, crc_uint32 len, crc_uint16 poly, cr
 			else value = value << 1;
 		}
 	}
-	//输出数据异或操作
 	value ^= xorout;
-	//输出数据反转
 	if (refout == crc_true) return  Reverse_Bit16(value);
-	//输出数据不反转
 	else  return value;
 }
-
 /********************************************************************************************/
-//功能：计算CRC32
-//输入：data  ：要计算的源数据
-//输入：len   ：要计算的源数据的长度
-//输入：poly  ：多项式值
-//输入：init  ：计算初始值
-//输入：xorout：结果数据要异或的值
-//输入：refin ：输入数据是否反转
-//输入：refout：输出结果是否反转
-//返回：CRC数据
+//function: Calculate CRC32
+//data    : source data
+//len     : source length
+//poly    : polynomial
+//init    : initial value
+//xorout  : result XOR value
+//refin   : input data inversion (crc_true or crc_false)
+//refout  : output data inversion (crc_true or crc_false)
+//return  : results of CRC32 
 /********************************************************************************************/
 crc_uint32 Crc_Calculate_32(crc_uint8* data, crc_uint32 len, crc_uint32 poly, crc_uint32 init, crc_uint32 xorout, crc_bool refin, crc_bool refout)
 {
@@ -135,9 +125,7 @@ crc_uint32 Crc_Calculate_32(crc_uint8* data, crc_uint32 len, crc_uint32 poly, cr
 	while (len--)
 	{
 		temp = *(data++);
-		//输入数据反转
 		if (refin == crc_true) temp = Reverse_Bit32(temp);
-		//输入数据不反转
 		else temp = temp << 24;
 		value ^= temp;
 		for (count = 0; count < 8; count++)
@@ -146,24 +134,20 @@ crc_uint32 Crc_Calculate_32(crc_uint8* data, crc_uint32 len, crc_uint32 poly, cr
 			else value = value << 1;
 		}
 	}
-	//输出数据异或操作
 	value ^= xorout;
-	//输出数据反转
 	if (refout == crc_true) return  Reverse_Bit32(value);
-	//输出数据不反转
 	else  return value;
 }
-
 /********************************************************************************************/
-//功能：检查CRC8
-//输入：data  ：要检查的源数据
-//输入：len   ：要检查的源数据的长度
-//输入：poly  ：多项式值
-//输入：init  ：计算初始值
-//输入：xorout：结果数据要异或的值
-//输入：refin ：输入数据是否反转
-//输入：refout：输出结果是否反转
-//返回：成功/失败
+//function: Check CRC8
+//data    : source data + results of CRC8 
+//len     : source length
+//poly    : polynomial
+//init    : initial value
+//xorout  : result XOR value
+//refin   : input data inversion (crc_true or crc_false)
+//refout  : output data inversion (crc_true or crc_false)
+//return  : compare the results(crc_true or crc_false)
 /********************************************************************************************/
 crc_bool Crc_Check_8(crc_uint8* data, crc_uint32 len, crc_uint8 poly, crc_uint8 init, crc_uint8 xorout, crc_bool refin, crc_bool refout)
 {
@@ -171,17 +155,16 @@ crc_bool Crc_Check_8(crc_uint8* data, crc_uint32 len, crc_uint8 poly, crc_uint8 
 		return crc_true;
 	else return crc_false;
 }
-
 /********************************************************************************************/
-//功能：检查CRC16
-//输入：data  ：要检查的源数据
-//输入：len   ：要检查的源数据的长度
-//输入：poly  ：多项式值
-//输入：init  ：计算初始值
-//输入：xorout：结果数据要异或的值
-//输入：refin ：输入数据是否反转
-//输入：refout：输出结果是否反转
-//返回：成功/失败
+//function: Check CRC16
+//data    : source data + results of CRC16 
+//len     : source length
+//poly    : polynomial
+//init    : initial value
+//xorout  : result XOR value
+//refin   : input data inversion (crc_true or crc_false)
+//refout  : output data inversion (crc_true or crc_false)
+//return  : compare the results(crc_true or crc_false)
 /********************************************************************************************/
 crc_bool Crc_Check_16(crc_uint8* data, crc_uint32 len, crc_uint16 poly, crc_uint16 init, crc_uint16 xorout, crc_bool refin, crc_bool refout)
 {
@@ -189,17 +172,16 @@ crc_bool Crc_Check_16(crc_uint8* data, crc_uint32 len, crc_uint16 poly, crc_uint
 		return crc_true;
 	else return crc_false;
 }
-
 /********************************************************************************************/
-//功能：检查CRC32
-//输入：data  ：要检查的源数据
-//输入：len   ：要检查的源数据的长度
-//输入：poly  ：多项式值
-//输入：init  ：计算初始值
-//输入：xorout：结果数据要异或的值
-//输入：refin ：输入数据是否反转
-//输入：refout：输出结果是否反转
-//返回：成功/失败
+//function: Check CRC32
+//data    : source data + results of CRC32 
+//len     : source length
+//poly    : polynomial
+//init    : initial value
+//xorout  : result XOR value
+//refin   : input data inversion (crc_true or crc_false)
+//refout  : output data inversion (crc_true or crc_false)
+//return  : compare the results(crc_true or crc_false)
 /********************************************************************************************/
 crc_bool Crc_Check_32(crc_uint8* data, crc_uint32 len, crc_uint32 poly, crc_uint32 init, crc_uint32 xorout, crc_bool refin, crc_bool refout)
 {
@@ -208,65 +190,302 @@ crc_bool Crc_Check_32(crc_uint8* data, crc_uint32 len, crc_uint32 poly, crc_uint
 	else return crc_false;
 }
 /********************************************************************************************/
-//功能：计算CRC8（常规）
-//输入：data  ：要计算的源数据
-//输入：len   ：要计算的源数据的长度
-//返回：CRC数据
+//function: Calculate CRC8 (conventional)
+//data    : source data
+//len     : source length
+//return  : results of CRC8
 /********************************************************************************************/
 crc_uint8 Crc_Calculate_Crc8(crc_uint8* data, crc_uint32 len)
 {
 	return Crc_Calculate_8(data, len, 0x07, 0x00, 0x00, crc_false, crc_false);
 }
 /********************************************************************************************/
-//功能：检查CRC8（常规）
-//输入：data  ：要检查的源数据
-//输入：len   ：要检查的源数据的长度
-//返回：成功/失败
+//function: Check CRC8 (conventional)
+//data    : source data + results of CRC8
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
 /********************************************************************************************/
 crc_bool Crc_Check_Crc8(crc_uint8* data, crc_uint32 len)
 {
 	return Crc_Check_8(data, len, 0x07, 0x00, 0x00, crc_false, crc_false);
 }
 /********************************************************************************************/
-//功能：计算CRC8（ITU）
-//输入：data  ：要计算的源数据
-//输入：len   ：要计算的源数据的长度
-//返回：CRC数据
+//function: Calculate CRC8 (ITU)
+//data    : source data
+//len     : source length
+//return  : results of CRC8
 /********************************************************************************************/
 crc_uint8 Crc_Calculate_Crc8_Itu(crc_uint8* data, crc_uint32 len)
 {
 	return Crc_Calculate_8(data, len, 0x07, 0x00, 0x55, crc_false, crc_false);
 }
 /********************************************************************************************/
-//功能：检查CRC8（ITU）
-//输入：data  ：要检查的源数据
-//输入：len   ：要检查的源数据的长度
-//返回：成功/失败
+//function: Check CRC8 (ITU)
+//data    : source data + results of CRC8
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
 /********************************************************************************************/
 crc_bool Crc_Check_Crc8_Itu(crc_uint8* data, crc_uint32 len)
 {
 	return Crc_Check_8(data, len, 0x07, 0x00, 0x55, crc_false, crc_false);
 }
-
 /********************************************************************************************/
-//功能：计算CRC8（ROHC）
-//输入：data  ：要计算的源数据
-//输入：len   ：要计算的源数据的长度
-//返回：CRC数据
+//function: Calculate CRC8 (ROHC)
+//data    : source data
+//len     : source length
+//return  : results of CRC8
 /********************************************************************************************/
 crc_uint8 Crc_Calculate_Crc8_Rohc(crc_uint8* data, crc_uint32 len)
 {
 	return Crc_Calculate_8(data, len, 0x07, 0xFF, 0x00, crc_true, crc_true);
 }
 /********************************************************************************************/
-//功能：检查CRC8（ROHC）
-//输入：data  ：要检查的源数据
-//输入：len   ：要检查的源数据的长度
-//返回：成功/失败
+//function: Check CRC8 (ROHC)
+//data    : source data + results of CRC8
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
 /********************************************************************************************/
 crc_bool Crc_Check_Crc8_Rohc(crc_uint8* data, crc_uint32 len)
 {
 	return Crc_Check_8(data, len, 0x07, 0xFF, 0x00, crc_true, crc_true);
 }
-
-
+/********************************************************************************************/
+//function: Calculate CRC8 (MAXIM)
+//data    : source data
+//len     : source length
+//return  : results of CRC8
+/********************************************************************************************/
+crc_uint8 Crc_Calculate_Crc8_Maxim(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_8(data, len, 0x31, 0x00, 0x00, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Check CRC8 (MAXIM)
+//data    : source data + results of CRC8
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc8_Maxim(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_8(data, len, 0x31, 0x00, 0x00, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Calculate CRC32 (conventional)
+//data    : source data
+//len     : source length
+//return  : results of CRC32
+/********************************************************************************************/
+crc_uint32 Crc_Calculate_Crc32(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_32(data, len, 0x04C11DB7, 0xFFFFFFFF, 0xFFFFFFFF, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Check CRC32 (conventional)
+//data    : source data + results of CRC32
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc32(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_32(data, len, 0x04C11DB7, 0xFFFFFFFF, 0xFFFFFFFF, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Calculate CRC32 (MPEG2)
+//data    : source data
+//len     : source length
+//return  : results of CRC32
+/********************************************************************************************/
+crc_uint32 Crc_Calculate_Crc32_Mpeg2(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_32(data, len, 0x04C11DB7, 0xFFFFFFFF, 0x00000000, crc_false, crc_false);
+}
+/********************************************************************************************/
+//function: Check CRC32 (MPEG2)
+//data    : source data + results of CRC32
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc32_Mpeg2(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_32(data, len, 0x04C11DB7, 0xFFFFFFFF, 0x00000000, crc_false, crc_false);
+}
+/********************************************************************************************/
+//function: Calculate CRC16 (IBM)
+//data    : source data
+//len     : source length
+//return  : results of CRC16
+/********************************************************************************************/
+crc_uint16 Crc_Calculate_Crc16_Ibm(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_16(data, len, 0x8005, 0x0000, 0x0000, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Check CRC16 (IBM)
+//data    : source data + results of CRC16
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc16_Ibm(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_16(data, len, 0x8005, 0x0000, 0x0000, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Calculate CRC16 (MAXIM)
+//data    : source data
+//len     : source length
+//return  : results of CRC16
+/********************************************************************************************/
+crc_uint16 Crc_Calculate_Crc16_Maxim(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_16(data, len, 0x8005, 0x0000, 0xFFFF, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Check CRC16 (MAXIM)
+//data    : source data + results of CRC16
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc16_Maxim(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_16(data, len, 0x8005, 0x0000, 0xFFFF, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Calculate CRC16 (USB)
+//data    : source data
+//len     : source length
+//return  : results of CRC16
+/********************************************************************************************/
+crc_uint16 Crc_Calculate_Crc16_Usb(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_16(data, len, 0x8005, 0xFFFF, 0xFFFF, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Check CRC16 (USB)
+//data    : source data + results of CRC16
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc16_Usb(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_16(data, len, 0x8005, 0xFFFF, 0xFFFF, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Calculate CRC16 (MODBUS)
+//data    : source data
+//len     : source length
+//return  : results of CRC16
+/********************************************************************************************/
+crc_uint16 Crc_Calculate_Crc16_Modbus(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_16(data, len, 0x8005, 0xFFFF, 0x0000, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Check CRC16 (MODBUS)
+//data    : source data + results of CRC16
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc16_Modbus(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_16(data, len, 0x8005, 0xFFFF, 0x0000, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Calculate CRC16 (CCITT)
+//data    : source data
+//len     : source length
+//return  : results of CRC16
+/********************************************************************************************/
+crc_uint16 Crc_Calculate_Crc16_Ccitt(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_16(data, len, 0x1021, 0x0000, 0x0000, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Check CRC16 (CCITT)
+//data    : source data + results of CRC16
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc16_Ccitt(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_16(data, len, 0x1021, 0x0000, 0x0000, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Calculate CRC16 (CCITTFALSE)
+//data    : source data
+//len     : source length
+//return  : results of CRC16
+/********************************************************************************************/
+crc_uint16 Crc_Calculate_Crc16_CcittFalse(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_16(data, len, 0x1021, 0xFFFF, 0x0000, crc_false, crc_false);
+}
+/********************************************************************************************/
+//function: Check CRC16 (CCITTFALSE)
+//data    : source data + results of CRC16
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc16_CcittFalse(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_16(data, len, 0x1021, 0xFFFF, 0x0000, crc_false, crc_false);
+}
+/********************************************************************************************/
+//function: Calculate CRC16 (X25)
+//data    : source data
+//len     : source length
+//return  : results of CRC16
+/********************************************************************************************/
+crc_uint16 Crc_Calculate_Crc16_X25(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_16(data, len, 0x1021, 0xFFFF, 0xFFFF, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Check CRC16 (X25)
+//data    : source data + results of CRC16
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc16_X25(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_16(data, len, 0x1021, 0xFFFF, 0xFFFF, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Calculate CRC16 (XMODEM)
+//data    : source data
+//len     : source length
+//return  : results of CRC16
+/********************************************************************************************/
+crc_uint16 Crc_Calculate_Crc16_Xmosem(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_16(data, len, 0x1021, 0x0000, 0x0000, crc_false, crc_false);
+}
+/********************************************************************************************/
+//function: Check CRC16 (XMODEM)
+//data    : source data + results of CRC16
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc16_Xmosem(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_16(data, len, 0x1021, 0x0000, 0x0000, crc_false, crc_false);
+}
+/********************************************************************************************/
+//function: Calculate CRC16 (DNP)
+//data    : source data
+//len     : source length
+//return  : results of CRC16
+/********************************************************************************************/
+crc_uint16 Crc_Calculate_Crc16_Dnp(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Calculate_16(data, len, 0x3D65, 0x0000, 0xFFFF, crc_true, crc_true);
+}
+/********************************************************************************************/
+//function: Check CRC16 (DNP)
+//data    : source data + results of CRC16
+//len     : source length
+//return  : compare the results(crc_true or crc_false)
+/********************************************************************************************/
+crc_bool Crc_Check_Crc16_Dnp(crc_uint8* data, crc_uint32 len)
+{
+	return Crc_Check_16(data, len, 0x3D65, 0x0000, 0xFFFF, crc_true, crc_true);
+}
